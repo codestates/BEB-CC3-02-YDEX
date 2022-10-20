@@ -1,26 +1,40 @@
-export interface CreateKlayPoolDto {
+import { IsNumber, IsString } from "class-validator";
+
+export class CreateKlayPoolDto {
+  @IsString()
   pair_address: string;
+  @IsString()
   pair_name: string;
+  @IsString()
   token_address: string;
+  @IsNumber()
   pid: number;
 }
 
-export interface CreateKip7PoolDto {
+export class CreateKip7PoolDto {
+  @IsString()
   pair_address: string;
+  @IsString()
   pair_name: string;
+  @IsString()
   tokenA_address: string;
+  @IsString()
   tokenB_address: string;
+  @IsNumber()
   pid: number;
 }
 
-export interface CreateSinglePoolDto {
+export class CreateSinglePoolDto {
+  @IsString()
   token_address: string;
+  @IsString()
   token_name: string;
+  @IsString()
   token_symbol: string;
 }
 
-export interface StakingSingleDto {}
+export class StakingSingleDto {}
 
-export interface StakingKlayDto {}
+export class StakingKlayDto {}
 
-export interface StakingKip7Dto {}
+export class StakingKip7Dto {}
