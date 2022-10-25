@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 
 
-export const Kip7PairSchema = new mongoose.Schema({
+export const PairPoolSchema = new mongoose.Schema({
     pair_address:{
         type:String,
         required : true,
+        unique:true,
     },
     pair_name:{
         type:String,
@@ -21,13 +22,23 @@ export const Kip7PairSchema = new mongoose.Schema({
     pid:{
         type:Number,
         required:true,
+    },
+    totalStaked:{
+        type:Number,
+        default:0,        
+    },
+    type:{
+        type:String,
+        required:true,
     }
 })
 
-export interface Kip7Pair{
+export interface PairPool{
     pair_address:string,
     pair_name:string,
     tokenA_address:string,
     tokenB_address:string,
     pid:number,
+    totalStatked:number,
+    type:string
 }

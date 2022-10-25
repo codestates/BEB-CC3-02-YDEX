@@ -8,8 +8,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import {
-  CreateKip7PoolDto,
-  CreateKlayPoolDto,
+  CreatePairPoolDto,
   CreateSinglePoolDto,
 } from 'src/staking/dto/staking.dto';
 import { StakingService } from 'src/staking/service/staking/staking.service';
@@ -18,26 +17,15 @@ import { StakingService } from 'src/staking/service/staking/staking.service';
 export class StakingController {
   constructor(private readonly stakingService: StakingService) {}
 
-  @Get('klaypool')
+  @Get('pairpool')
   getKlayPool() {
-    return this.stakingService.getKlayPool();
+    return this.stakingService.getPairPool();
   }
 
-  @Get('kip7pool')
-  getKip7Pool() {
-    return this.stakingService.getKip7Pool();
-  }
-
-  @Post('klaypool')
+  @Post('pairpool')
   @UsePipes(ValidationPipe)
-  createKlayPool(@Body() createKlayPoolDto: CreateKlayPoolDto) {
-    return this.stakingService.createKlayPool(createKlayPoolDto);
-  }
-
-  @Post('kip7pool')
-  @UsePipes(ValidationPipe)
-  createKip7Pool(@Body() createKip7PoolDto: CreateKip7PoolDto) {
-    return this.stakingService.createKip7Pool(createKip7PoolDto);
+  createKlayPool(@Body() createPairPoolDto: CreatePairPoolDto) {
+    return this.stakingService.createPairPool(createPairPoolDto);
   }
 
   @Get('singlepool')

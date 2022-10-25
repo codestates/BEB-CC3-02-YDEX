@@ -1,17 +1,6 @@
 import { IsNumber, IsString } from "class-validator";
 
-export class CreateKlayPoolDto {
-  @IsString()
-  pair_address: string;
-  @IsString()
-  pair_name: string;
-  @IsString()
-  token_address: string;
-  @IsNumber()
-  pid: number;
-}
-
-export class CreateKip7PoolDto {
+export class CreatePairPoolDto {
   @IsString()
   pair_address: string;
   @IsString()
@@ -22,6 +11,8 @@ export class CreateKip7PoolDto {
   tokenB_address: string;
   @IsNumber()
   pid: number;
+  @IsString()
+  type:string
 }
 
 export class CreateSinglePoolDto {

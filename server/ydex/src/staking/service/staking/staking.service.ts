@@ -8,12 +8,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import {
-  CreateKip7PoolDto,
-  CreateKlayPoolDto,
+  CreatePairPoolDto,
   CreateSinglePoolDto,
 } from 'src/staking/dto/staking.dto';
-import { Kip7Pair } from 'src/staking/model/Kip7Pair.model';
-import { KlayPair } from 'src/staking/model/KlayPair.model';
+import { PairPool } from 'src/staking/model/PairPool.model';
 import { StakedToken } from 'src/staking/model/StakedToken.model';
 import { Token } from 'src/staking/model/Token.model';
 
@@ -21,34 +19,21 @@ import { Token } from 'src/staking/model/Token.model';
 export class StakingService {
   private logger = new Logger('StakingController');
   constructor(
-    @InjectModel('Kip7Pair') private readonly kip7PairModel: Model<Kip7Pair>,
-    @InjectModel('KlayPair') private readonly klayPairModel: Model<KlayPair>,
+    @InjectModel('PairPool') private readonly pairPoolModel: Model<PairPool>,
     @InjectModel('StakedToken')
     private readonly stakedTokenModel: Model<StakedToken>,
     @InjectModel('Token') private readonly tokenModel: Model<Token>,
   ) {}
+  
 
-  async getKlayPool(): Promise<KlayPair[]> {
+  async getPairPool(): Promise<PairPool[]> {
     try {
-      const klayPoolList = await this.klayPairModel.find();
+      const pairPoolList = await this.pairPoolModel.find();
 
-      if (!klayPoolList)
-        throw new NotFoundException('Cannot find any klayPoolList');
+      if (!pairPoolList)
+        throw new NotFoundException('Cannot find any PairPool List');
 
-      return klayPoolList;
-    } catch (error) {
-      throw new BadRequestException('Cannot execute request');
-    }
-  }
-
-  async getKip7Pool(): Promise<Kip7Pair[]> {
-    try {
-      const kip7PoolList = await this.kip7PairModel.find();
-
-      if (!kip7PoolList)
-        throw new NotFoundException('Cannot find any klayPoolList');
-
-      return kip7PoolList;
+      return pairPoolList;
     } catch (error) {
       throw new BadRequestException('Cannot execute request');
     }
@@ -59,7 +44,7 @@ export class StakingService {
       const singlePoolList = await this.stakedTokenModel.find();
 
       if (!singlePoolList)
-        throw new NotFoundException('Cannot find any klayPoolList');
+        throw new NotFoundException('Cannot find any SinglePool List');
 
       return singlePoolList;
     } catch (error) {
@@ -67,22 +52,12 @@ export class StakingService {
     }
   }
 
-  async createKlayPool(createKlayPoolDto: CreateKlayPoolDto): Promise<{}> {
-    try {
-      const newKlayPool = await this.klayPairModel.create(createKlayPoolDto);
-      const savedKlayPool = await newKlayPool.save();
-      return savedKlayPool;
-    } catch (error) {
-      this.logger.error(error);
-      throw new BadRequestException('Cannot execute request');
-    }
-  }
 
-  async createKip7Pool(createKip7PoolDto: CreateKip7PoolDto): Promise<{}> {
+  async createPairPool(createPairPoolDto: CreatePairPoolDto): Promise<{}> {
     try {
-      const newKip7Pool = await this.kip7PairModel.create(createKip7PoolDto);
-      const savedKip7Pool = await newKip7Pool.save();
-      return savedKip7Pool;
+      const newPairPool = await this.pairPoolModel.create(createPairPoolDto);
+      const savedPairPool = await newPairPool.save();
+      return savedPairPool;
     } catch (error) {
       this.logger.error(error);
       throw new BadRequestException('Cannot execute request');
