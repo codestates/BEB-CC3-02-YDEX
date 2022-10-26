@@ -22,7 +22,8 @@ mongoose.connect(process.env.MONGO_URL, () => {
 
 setInterval(() => {
   singlePoolTotalStaked();
-}, 3000);
+  // PairPoolTotalStatked();
+}, 1000);
 
 app.listen(port, () => {
   console.log(`Coindemon is running on ${port}...`);

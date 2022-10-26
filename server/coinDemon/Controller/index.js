@@ -13,8 +13,9 @@ const PriceOracle = require("../Model/PriceOracle");
 const { Error } = require("mongoose");
 
 // addresss
-const yktokenAddr = "0xaa80658f5a86562f07BdF7caD649299BA3997036";
-const farmingAddress = "0x3E62CB2A987F0Dc750541f092bA46EbF08020648";
+const yktokenAddr = '0xaa80658f5a86562f07BdF7caD649299BA3997036'
+const yjtokenAddr ='0xd7877710190E492561F692a08117c63e32cf8ac1'
+const farmingAddress = "0x7f0AF6ae4B64014025b56086293515250bC8D007";
 
 // contract
 const ykPoolContract = new caver.klay.Contract(singlePoolAbi, yktokenAddr);
@@ -34,13 +35,16 @@ const singlePoolTotalStaked = async () => {
       // token_address: yktokenAddr,
       token_address:"0x1234"
     });
-    console.log(SinglePoolFound);
 
-    const { totalStaked } = await ykPoolContract.methods.pool().call();
+    if(SinglePoolFound){
 
-    await SinglePoolFound.updateOne({
-      totalStaked: caver.utils.fromPeb(totalStaked, "KLAY"),
-    });
+      const SinglePoolInfo = await ykPoolContract.methods.pool().call();
+  
+      await SinglePoolFound.updateOne({
+        totalStaked: await caver.utils.fromPeb(SinglePoolInfo.totalStaked, "KLAY"),
+      });
+    }
+    
   } catch (error) {
     // throw new Error(error);
     console.error(error);
@@ -52,33 +56,25 @@ const singlePoolTotalStaked = async () => {
  */
 
 const PairPoolTotalStatked = async () => {
-// try {
-//   const PairPoolFound = await PairPool.findOne({
-//     token_address: farmingAddress,
-//   });
-//   console.log(PairPoolFound);
+  try {
+    const poolLength = await farmingContract.methods.poolLength().call();
+    
+    for(let i=0; i<poolLength; i++){
+      const value = await farmingContract.methods.poolInfo(i).call();
+      console.log(value);
+      
+      const PoolFound = await PairPool.findOne({pair_address:value.lpToken})
 
-//   const { totalStaked } = await ykPoolContract.methods.pool().call();
+      if(PoolFound) {
+        await PoolFound.updateOne({totalStaked:value.totalStaked})
+      }
 
-//   await SinglePoolFound.updateOne({
-//     totalStaked: caver.utils.fromPeb(totalStaked, "KLAY"),
-//   });
-// } catch (error) {
-//   // throw new Error(error);
-//   console.error(error);
-}
-
-async function farmingStatking() {
-  const poolLength = await farmingContract.methods.poolLength().call();
-  for(let item=0; item<poolLength; item++){
-
-    const value = await farmingContract.methods.poolInfo(item).call();
-    // console.log(caver.utils.fromPeb(value.totalStaked, "KLAY"));
-    console.log(value.lpToken)
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
 
-// farmingStatking();
 
 /*
 // const testContractAddr = "0x0e16D3b76d64AD7AdB01DC4aDDbCA4f16F7B6E5E";
