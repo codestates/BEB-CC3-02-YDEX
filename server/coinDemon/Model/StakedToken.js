@@ -15,7 +15,7 @@ const StakedTokenSchema = new mongoose.Schema({
   },
   totalStaked:{
     type:Number,
-    required:false
+    default : 0,
 }
 });
 

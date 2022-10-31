@@ -15,17 +15,12 @@ export const NftSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    price: {
-      type: Number,
-      default: 0,
-    },
   },
   { timestamps: true },
 );
 
-export interface NftSchema {
-  address: string;
+export interface Nft {
+  address:string;
   tokenId: number;
   tokenURI: string;
-  price: number;
 }

@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Logger,
+  Param,
   Post,
   UsePipes,
   ValidationPipe,
@@ -37,6 +38,16 @@ export class StakingController {
   @UsePipes(ValidationPipe)
   createSinglePool(@Body() createSinglePoolDto: CreateSinglePoolDto) {
     return this.stakingService.createSinglePool(createSinglePoolDto);
+  }
+
+  @Get('nft')
+  getTotalNFTs(){
+    return this.stakingService.getTotalNFTs();
+  }
+
+  @Get('nft:id')
+  getMyNFT(@Param('id') id:string ){
+    
   }
 
   @Post()

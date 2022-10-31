@@ -14,6 +14,7 @@ import {
 import { PairPool } from 'src/staking/model/PairPool.model';
 import { StakedToken } from 'src/staking/model/StakedToken.model';
 import { Token } from 'src/staking/model/Token.model';
+import {Nft} from 'src/staking/model/Nft.model'
 
 @Injectable()
 export class StakingService {
@@ -23,6 +24,7 @@ export class StakingService {
     @InjectModel('StakedToken')
     private readonly stakedTokenModel: Model<StakedToken>,
     @InjectModel('Token') private readonly tokenModel: Model<Token>,
+    @InjectModel('Nft') private readonly NftModel:Model<Nft>
   ) {}
   
 
@@ -76,6 +78,28 @@ export class StakingService {
     } catch (error) {
       this.logger.error(error);
       throw new BadRequestException('Cannot execute request');
+    }
+  }
+
+  async getTotalNFTs(){
+    try {
+      return await this.NftModel.find();
+      
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
+  async getMyNFTs(id:string){
+    try {
+      const myNFTFound = await this.NftModel.findOne({address : id})
+      if(!myNFTFound){
+        throw new NotFoundException('Cannot Find NFT for owner');
+      }
+
+      return myNFTFound;
+    } catch (error) {
+      throw new BadRequestException(error);
     }
   }
 

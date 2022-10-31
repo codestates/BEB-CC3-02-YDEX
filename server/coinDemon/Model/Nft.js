@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const NFTSchema = new mongoose.Schema({
-    address : {
-        type : String,
+    address:{
+        type:String,
         required : true,
     },
     tokenId : {
@@ -14,10 +14,7 @@ const NFTSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
-    price : {
-        type : Number,
-        default : 0,
-    }
+    
 }, {timestamps : true})
 
 module.exports = mongoose.model("nft", NFTSchema);

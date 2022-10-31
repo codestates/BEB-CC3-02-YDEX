@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const {
   PairPoolTotalStatked,
   singlePoolTotalStaked,
+  NFT_Marketplace
 } = require("../coinDemon/Controller");
 
 dotenv.config();
@@ -21,8 +22,9 @@ mongoose.connect(process.env.MONGO_URL, () => {
 });
 
 setInterval(() => {
-  singlePoolTotalStaked();
-  // PairPoolTotalStatked();
+  // singlePoolTotalStaked();
+  PairPoolTotalStatked();
+  NFT_Marketplace();
 }, 1000);
 
 app.listen(port, () => {
