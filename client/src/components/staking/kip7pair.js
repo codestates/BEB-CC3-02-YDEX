@@ -304,7 +304,7 @@ function KlayPair() {
 																	<InputLabel component="h5">{selectPair.pair_name} address: </InputLabel>
 																	<p>{selectPair.pair_address}</p>
 																	<p>출금가능한 LP 토큰: {Number(depositedAmount).toFixed(2)} {selectPair.pair_name}</p>
-																	<p>수령가능한 리워드: {Number(RewardAmount).toFixed(2)} {selectPair.pair_name}</p>
+																	<p>수령가능한 리워드: {Number(RewardAmount).toFixed(2)} YDEXToken</p>
 																	<FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
 																		<OutlinedInput fullWidth
 																			margin="dense"
